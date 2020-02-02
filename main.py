@@ -39,6 +39,7 @@ def signin():
     passwd = input('password: ')
     if find_employee_account(login, passwd):
         cls()
+        fin.close()
         return first_scene 
     else:
         cls()
@@ -47,6 +48,7 @@ def signin():
         print('Please contact your system administrator')
         time.sleep(10)
         cls()
+        fin.close()
         return signin_register_screen()
 
 def register():
@@ -69,8 +71,10 @@ def register():
         while True:
             user_input = input('1 or 2: ')
             if user_input == '1':
+                fout.close()
                 return signin_register_screen()
             elif user_input == '2':
+                fout.close()
                 return register()
             else:
                 print('Error')
@@ -78,18 +82,22 @@ def register():
                 time.sleep(1)
     else:
         fout.write(login + ' ' + passwd + '\n')
+        fout.close()
+        return signin_register_screen()
 
 def find_employee_account(login, passwd)-> bool:
     '''this func searches through the file with login&passwords
     for employees and returns True if account exists'''
-    
+
     fin = open('employees/accounts.txt','rt')
     string = login + ' ' + passwd
     while True:
         line = fin.readline()
         if string == line:
+            fin.close()
             return True
-        else:
+        elif line == '':
+            fin.close()
             return False
 
 
