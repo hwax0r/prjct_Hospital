@@ -33,24 +33,21 @@ def signin_register_screen():
     
 def signin():
     fin = open('employees/accounts.txt','rt')
+    cls()
     print('This is SignIn screen \n')
     login = input('login: ')
     passwd = input('password: ')
-    string = login + ' '+ passwd
-    while True:
-        line = fin.readline()
-        if string == line:
-            cls()
-            return first_scene 
-        elif line == '' or ' ':
-            cls()
-            print('Error')
-            print('There are no such login or password or even account')
-            print('Please contact your system administrator')
-            time.sleep(10)
-            cls()
-            return signin_register_screen()
-
+    if find_employee_account(login, passwd):
+        cls()
+        return first_scene 
+    else:
+        cls()
+        print('Error')
+        print('There are no such login or password or even account')
+        print('Please contact your system administrator')
+        time.sleep(10)
+        cls()
+        return signin_register_screen()
 
 def register():
     cls()
@@ -82,7 +79,10 @@ def register():
     else:
         fout.write(login + ' ' + passwd + '\n')
 
-def find_employee_account(login, passwd):
+def find_employee_account(login, passwd)-> bool:
+    '''this func searches through the file with login&passwords
+    for employees and returns True if account exists'''
+    
     fin = open('employees/accounts.txt','rt')
     string = login + ' ' + passwd
     while True:
@@ -94,7 +94,7 @@ def find_employee_account(login, passwd):
 
 
 
-register()
+signin()
 
     
     
