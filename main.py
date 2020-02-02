@@ -81,7 +81,8 @@ def register():
                 print('There are no such option')
                 time.sleep(1)
     else:
-        fout.write(login + ' ' + passwd + '\n')
+        fout.write(login + ' ' + passwd) # string concatenation takes long time
+        fout.write('\n') # here was a problem of changing strings in a file 
         fout.close()
         return signin_register_screen()
 
@@ -90,19 +91,12 @@ def find_employee_account(login, passwd)-> bool:
     for employees and returns True if account exists'''
 
     fin = open('employees/accounts.txt','rt')
-    string = login + ' ' + passwd
+    string = [login, passwd] #problem in checking passwd was in a loop
     while True:
-        line = fin.readline()
+        line = fin.readline().split() #here was a problem . i don't understand why. maybe '\n'
         if string == line:
             fin.close()
             return True
-        elif line == '':
+        elif line == []:
             fin.close()
             return False
-
-
-
-signin()
-
-    
-    
